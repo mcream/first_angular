@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger,style,transition,animate,keyframes,query,stagger } from '@angular/animations';
-import { Transform } from 'stream';
+import { DataService } from '../data.service';
 
 
 @Component({
@@ -34,19 +34,23 @@ export class HomeComponent implements OnInit {
   itemCount: number = 4;
   btnText: string = 'Dodaj rekord';
   goalText: string = 'Mój pierwszt cel';
-  goals = ['Przykladowy tekst nr1', 'Przykladowy tekst nr2', 'Przykladowy tekst nr3'];
+  goals = [];
 
-  constructor() { }
+  constructor(private _data: DataService) { }
 
   ngOnInit() {
+    this._data.goal.subscribe(res => this.goals = res);
     this.itemCount = this.goals.length;
+    this._data.goal.changeGoal(this.goals);
   }
   addItem(){
     this.goals.push(this.goalText);
     this.goalText = '';
     this.itemCount = this.goals.length;
-  }
+    this._data.changeGoal(this.goals);
+  } 
   removeItem(i){
     this.goals.splice(i, 1);
+    this._data.changeGoal(this.goals);
   }
 }

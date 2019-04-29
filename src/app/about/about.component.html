@@ -1,3 +1,8 @@
 <p>
   Tutaj znajduje się treść 'About' <a href="" (click)="sendMeHome()"><strong>Cofnij</strong></a>
 </p>
+<ul>
+  <li *ngFor="let goal of goals">
+    {{ goal }}
+  </li>
+</ul>
